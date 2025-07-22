@@ -18,8 +18,10 @@ public class CarModel {
     private Long id;
     private String make;
     private String model;
+    @Column(name = "manufacture_year")
     private Integer manufactureYear;
     private String color;
+    @Column(unique = true, name = "license_plate")
     private String licensePlate;
     private CarStatus status;
 }
