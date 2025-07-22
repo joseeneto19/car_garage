@@ -24,8 +24,13 @@ public class CarController {
         return carService.getAllCars();
     }
 
-    @GetMapping("list/{id}")
+    @GetMapping("/list/{id}")
     public CarModel listCarById(@PathVariable Long id) {
         return carService.getCarById(id);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public void deleteCar(@PathVariable Long id) {
+        carService.deleteCarById(id);
     }
 }

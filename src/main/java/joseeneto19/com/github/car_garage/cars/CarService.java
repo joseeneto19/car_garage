@@ -25,4 +25,8 @@ public class CarService {
         Optional<CarModel> carModel = carRepository.findById(id);
         return carModel.orElse(null);
     }
+
+    public void deleteCarById(Long id) {
+        carRepository.deleteById(id);
+    }
 }
