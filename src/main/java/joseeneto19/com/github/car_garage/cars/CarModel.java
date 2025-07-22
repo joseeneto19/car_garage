@@ -1,6 +1,6 @@
-package cars;
+package joseeneto19.com.github.car_garage.cars;
 
-import enums.CarStatus;
+import joseeneto19.com.github.car_garage.cars.enums.CarStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -23,5 +23,6 @@ public class CarModel {
     private String color;
     @Column(unique = true, name = "license_plate")
     private String licensePlate;
+    @Enumerated(EnumType.STRING)
     private CarStatus status;
 }
