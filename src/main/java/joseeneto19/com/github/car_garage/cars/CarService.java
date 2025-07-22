@@ -1,4 +1,4 @@
-package cars;
+package joseeneto19.com.github.car_garage.cars;
 
 import org.springframework.stereotype.Service;
 
@@ -10,7 +10,7 @@ public class CarService {
         this.carRepository = carRepository;
     }
 
-    public CarModel criarCar(CarModel carModel) {
+    public CarModel createCar(CarModel carModel) {
         return carRepository.save(carModel);
     }
 }

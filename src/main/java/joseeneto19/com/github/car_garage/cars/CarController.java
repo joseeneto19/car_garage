@@ -1,9 +1,9 @@
-package cars;
+package joseeneto19.com.github.car_garage.cars;
 
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/carros")
+@RequestMapping("/cars")
 public class CarController {
 
     private final CarService carService;
@@ -12,13 +12,8 @@ public class CarController {
         this.carService = carService;
     }
 
-    @PostMapping("/criar")
+    @PostMapping("/create")
     public CarModel createCar(@RequestBody CarModel carModel) {
-        return carService.criarCar(carModel);
-    }
-
-    @GetMapping("/listar")
-    public String listarCars() {
-        return "Lista de cars";
+        return carService.createCar(carModel);
     }
 }
