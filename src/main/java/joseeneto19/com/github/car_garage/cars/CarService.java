@@ -13,8 +13,8 @@ public class CarService {
         this.carRepository = carRepository;
     }
 
-    public CarModel createCar(CarModel carModel) {
-        return carRepository.save(carModel);
+    public CarModel createCar(CarModel carDetails) {
+        return carRepository.save(carDetails);
     }
 
     public List<CarModel> getAllCars() {
@@ -28,5 +28,14 @@ public class CarService {
 
     public void deleteCarById(Long id) {
         carRepository.deleteById(id);
+    }
+
+    public CarModel updateCar(Long id, CarModel carDetails) {
+        if (carRepository.existsById(id)) {
+            carDetails.setId(id);
+            return carRepository.save(carDetails);
+        } else {
+            return null;
+        }
     }
 }
