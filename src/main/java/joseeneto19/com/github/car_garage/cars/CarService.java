@@ -8,13 +8,17 @@ import java.util.Optional;
 @Service
 public class CarService {
     private final CarRepository carRepository;
+    private CarMapper carMapper;
 
-    public CarService(CarRepository carRepository) {
+    public CarService(CarRepository carRepository, CarMapper carMapper) {
         this.carRepository = carRepository;
+        this.carMapper = carMapper;
     }
 
-    public CarModel createCar(CarModel carDetails) {
-        return carRepository.save(carDetails);
+    public CarDTO createCar(CarDTO carDetails) {
+        CarModel car = carMapper.map(carDetails);
+        carRepository.save(car);
+        return carMapper.map(car);
     }
 
     public List<CarModel> getAllCars() {

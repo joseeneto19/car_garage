@@ -15,8 +15,8 @@ public class CarController {
     }
 
     @PostMapping("/create")
-    public CarModel createCar(@RequestBody CarModel carModel) {
-        return carService.createCar(carModel);
+    public CarDTO createCar(@RequestBody CarDTO carDTO) {
+        return carService.createCar(carDTO);
     }
 
     @GetMapping("/list")
