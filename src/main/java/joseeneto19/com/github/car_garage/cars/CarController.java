@@ -20,12 +20,12 @@ public class CarController {
     }
 
     @GetMapping("/list")
-    public List<CarModel> listCars() {
+    public List<CarDTO> listCars() {
         return carService.getAllCars();
     }
 
     @GetMapping("/list/{id}")
-    public CarModel listCarById(@PathVariable Long id) {
+    public CarDTO listCarById(@PathVariable Long id) {
         return carService.getCarById(id);
     }
 
@@ -35,7 +35,7 @@ public class CarController {
     }
 
     @PutMapping("/update/{id}")
-    public CarModel uptadeCar (@PathVariable Long id, @RequestBody CarModel carModel) {
-        return carService.updateCar(id, carModel);
+    public CarDTO uptadeCar (@PathVariable Long id, @RequestBody CarDTO carDTO) {
+        return carService.updateCar(id, carDTO);
     }
 }
