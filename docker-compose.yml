@@ -1,0 +1,12 @@
+version: '3.8'
+services:
+  postgres:
+    image: postgres:15.0
+    container_name: car_garage
+    environment:
+      POSTGRES_DB: ${POSTGRES_URL}
+      POSTGRES_USER: ${POSTGRES_USERNAME}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "5432:5432"
+    restart: always
