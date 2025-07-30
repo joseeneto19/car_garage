@@ -4,36 +4,47 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CarService {
     private final CarRepository carRepository;
+    private CarMapper carMapper;
 
-    public CarService(CarRepository carRepository) {
+    public CarService(CarRepository carRepository, CarMapper carMapper) {
         this.carRepository = carRepository;
+        this.carMapper = carMapper;
     }
 
-    public CarModel createCar(CarModel carDetails) {
-        return carRepository.save(carDetails);
+    public CarDTO createCar(CarDTO carDetails) {
+        CarModel car = carMapper.map(carDetails);
+        carRepository.save(car);
+        return carMapper.map(car);
     }
 
-    public List<CarModel> getAllCars() {
-        return carRepository.findAll();
+    public List<CarDTO> getAllCars() {
+        List<CarModel> cars = carRepository.findAll();
+        return cars.stream()
+                .map(carMapper::map)
+                .collect(Collectors.toList());
     }
 
-    public CarModel getCarById(Long id) {
+    public CarDTO getCarById(Long id) {
         Optional<CarModel> carModel = carRepository.findById(id);
-        return carModel.orElse(null);
+        return carModel.map(carMapper::map).orElse(null);
     }
 
     public void deleteCarById(Long id) {
         carRepository.deleteById(id);
     }
 
-    public CarModel updateCar(Long id, CarModel carDetails) {
-        if (carRepository.existsById(id)) {
-            carDetails.setId(id);
-            return carRepository.save(carDetails);
+    public CarDTO updateCar(Long id, CarDTO carDTO) {
+        Optional<CarModel> carById = carRepository.findById(id);
+        if (carById.isPresent()) {
+            CarModel carEdited = carMapper.map(carDTO);
+            carEdited.setId(id);
+            CarModel carSave = carRepository.save(carEdited);
+            return carMapper.map(carSave);
         } else {
             return null;
         }

@@ -1,5 +1,5 @@
 CREATE TABLE tb_cars (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    id BIGSERIAL PRIMARY KEY,
     make VARCHAR(50) NOT NULL,
     model VARCHAR(50) NOT NULL,
     manufacture_year INT NOT NULL,
