@@ -1,5 +1,6 @@
 package joseeneto19.com.github.car_garage.cars;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,7 +24,7 @@ public class CarService {
     }
 
     public List<CarDTO> getAllCars() {
-        List<CarModel> cars = carRepository.findAll();
+        List<CarModel> cars = carRepository.findAll(Sort.by(Sort.Direction.ASC, "id"));
         return cars.stream()
                 .map(carMapper::map)
                 .collect(Collectors.toList());
