@@ -1,5 +1,7 @@
 package joseeneto19.com.github.car_garage.cars;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,27 +17,51 @@ public class CarController {
     }
 
     @PostMapping("/create")
-    public CarDTO createCar(@RequestBody CarDTO carDTO) {
-        return carService.createCar(carDTO);
+    public ResponseEntity<String> createCar(@RequestBody CarDTO car) {
+        CarDTO newCar = carService.createCar(car);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body("Car added successfully!" + "\n" +
+                "Make: " +newCar.getMake() + "\n" +
+                "Model: " +newCar.getModel() + "\n" +
+                "License Plate: " +newCar.getLicensePlate());
     }
 
     @GetMapping("/list")
-    public List<CarDTO> listCars() {
-        return carService.getAllCars();
+    public ResponseEntity<List<CarDTO>> listCars() {
+        List<CarDTO> cars =  carService.getAllCars();
+        return ResponseEntity.ok(cars);
     }
 
     @GetMapping("/list/{id}")
-    public CarDTO listCarById(@PathVariable Long id) {
-        return carService.getCarById(id);
+    public ResponseEntity<?> listCarById(@PathVariable Long id) {
+
+        CarDTO car = carService.getCarById(id);
+
+        if (car != null) {
+            return ResponseEntity.ok(car);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
     }
 
     @DeleteMapping("/delete/{id}")
-    public void deleteCar(@PathVariable Long id) {
-        carService.deleteCarById(id);
+    public ResponseEntity<String> deleteCar(@PathVariable Long id) {
+        if (carService.getCarById(id) != null) {
+            carService.deleteCarById(id);
+            return ResponseEntity.ok("Car deleted successfully!");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Car not found!");
+        }
     }
 
     @PutMapping("/update/{id}")
-    public CarDTO uptadeCar (@PathVariable Long id, @RequestBody CarDTO carDTO) {
-        return carService.updateCar(id, carDTO);
+    public ResponseEntity<?> uptadeCar (@PathVariable Long id, @RequestBody CarDTO carDTO) {
+        CarDTO car = carService.updateCar(id, carDTO);
+        if (car != null) {
+            return ResponseEntity.ok(car);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
     }
 }
